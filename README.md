@@ -1,55 +1,55 @@
-HRMS – Human Resource Management System
+HRMS – Simple Employee & Team Management System
 
-A simple full-stack HRMS application built with React (frontend) and Node.js + Express + MySQL (backend).
-This project allows an organisation to manage employees and teams with basic CRUD operations.
+This is a full-stack Human Resource Management System (HRMS) built using React (frontend) and Node.js + Express + MySQL (backend).
+The project allows an organization to register, log in, add employees, create teams, assign employees to teams, and manage everything through a clean, simple UI.
 
 Features
 Authentication
 
-Organisation registration
+Register organization
 
-Login with email and password
+Login using email & password
 
 JWT-based authentication
 
-Protected routes on frontend
+Private routes on frontend
 
 Employees Module
 
-Add new employees
+Add employee
 
-List all employees
+View employee list
 
-Delete employees
+Delete employee
 
-Auto-generated serial numbers
-
-Data linked to organisation
+Auto-increment serial numbers (not database IDs)
 
 Teams Module
 
-Create and edit teams
+Create teams
 
-Delete teams
+Edit team
 
-Assign employees to teams
+Delete team
 
-Unassign employees from teams
+Assign employees to a team
 
-View team members
+Remove employees from a team
 
 UI
 
-Clean and responsive interface
+Navbar
 
-Simple navigation bar
+Clean and simple responsive layout
 
-Styled using custom CSS
+Styled tables and forms
 
-Technologies Used
+Basic button styling
+
+Tech Stack
 Frontend
 
-React.js
+React
 
 Axios
 
@@ -61,9 +61,128 @@ Backend
 
 Node.js
 
-Express.js
+Express
 
 MySQL
+
+Sequelize ORM
+
+JWT Authentication
+
+Dotenv
+
+Folder Structure
+my_hrms/
+│
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── index.js
+│   ├── package.json
+│   └── .env
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── App.js
+│   │   └── index.js
+│   ├── package.json
+│
+└── README.md
+
+Setup Instructions
+1. Clone the Repository
+git clone https://github.com/your-username/my_hrms.git
+cd my_hrms
+
+Backend Setup
+2. Navigate to Backend
+cd backend
+
+3. Install Backend Dependencies
+npm install
+
+4. Configure MySQL Database
+
+Create a database:
+
+CREATE DATABASE hrms_db;
+
+5. Configure .env File
+
+Create a .env file inside /backend:
+
+PORT=5000
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=your_mysql_user
+DB_PASS=your_mysql_password
+DB_NAME=hrms_db
+JWT_SECRET=your_random_secret_key
+
+6. Run Backend
+npm run dev
+
+
+Backend runs on:
+
+http://localhost:5000/
+
+Frontend Setup
+7. Navigate to Frontend
+cd ../frontend
+
+8. Install Frontend Dependencies
+npm install
+
+9. Start Frontend
+npm start
+
+
+Frontend runs on:
+
+http://localhost:3000/
+
+Default Login
+
+After registering an organization, use the login page:
+
+Email: admin email used during registration
+Password: password used during registration
+
+API Endpoints
+Auth
+
+POST /api/auth/register
+
+POST /api/auth/login
+
+Employees
+
+GET /api/employees
+
+POST /api/employees
+
+DELETE /api/employees/:id
+
+Teams
+
+GET /api/teams
+
+POST /api/teams
+
+PUT /api/teams/:id
+
+DELETE /api/teams/:id
+
+POST /api/teams/:teamId/assign
+
+DELETE /api/teams/:teamId/unassign
 
 Sequelize ORM
 
