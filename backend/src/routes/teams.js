@@ -1,4 +1,4 @@
-﻿/* backend/src/routes/teams.js */
+﻿
 const express = require("express");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const {
@@ -19,10 +19,8 @@ router.post("/", createTeam);
 router.put("/:id", updateTeam);
 router.delete("/:id", deleteTeam);
 
-// Assign employee to team
 router.post("/:teamId/assign", assignEmployee);
 
-// Unassign employee
 router.delete("/:teamId/unassign", unassignEmployee);
 
 module.exports = router;

@@ -1,10 +1,6 @@
-﻿/* backend/src/controllers/employeeController.js */
+﻿
 const { Employee, Log } = require('../models');
 
-/**
- * GET /api/employees
- * List all employees for the organisation
- */
 async function listEmployees(req, res) {
   try {
     const employees = await Employee.findAll({ where: { organisation_id: req.user.orgId } });
@@ -15,10 +11,6 @@ async function listEmployees(req, res) {
   }
 }
 
-/**
- * POST /api/employees
- * Create employee for the organisation
- */
 async function createEmployee(req, res) {
   const { first_name, last_name, email, phone } = req.body;
   try {
@@ -27,7 +19,6 @@ async function createEmployee(req, res) {
       organisation_id: req.user.orgId
     });
 
-    // log creation
     await Log.create({
       organisation_id: req.user.orgId,
       user_id: req.user.userId,
@@ -42,12 +33,8 @@ async function createEmployee(req, res) {
   }
 }
 
-/**
- * PUT /api/employees/:id
- * Update employee (ownership enforced)
- */
 async function updateEmployee(req, res) {
-  const id = Number(req.params.id);              // ensure numeric
+  const id = Number(req.params.id);             
   const { first_name, last_name, email, phone } = req.body;
 
   try {
@@ -57,8 +44,6 @@ async function updateEmployee(req, res) {
     if (!employee) return res.status(404).json({ message: 'Employee not found' });
 
     await employee.update({ first_name, last_name, email, phone });
-
-    // create an audit log (meta can include new values)
     await Log.create({
       organisation_id: req.user.orgId,
       user_id: req.user.userId,
@@ -66,7 +51,6 @@ async function updateEmployee(req, res) {
       meta: { employeeId: employee.id, first_name, last_name, email, phone }
     });
 
-    // respond with the updated employee
     return res.json(employee);
   } catch (err) {
     console.error('updateEmployee error', err);
@@ -74,10 +58,6 @@ async function updateEmployee(req, res) {
   }
 }
 
-/**
- * DELETE /api/employees/:id
- * Delete employee (ownership enforced)
- */
 async function deleteEmployee(req, res) {
   const { id } = req.params;
   try {

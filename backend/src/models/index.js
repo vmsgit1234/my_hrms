@@ -1,4 +1,4 @@
-﻿/* backend/src/models/index.js */
+﻿
 const sequelize = require('../db');
 
 const Organisation = require('./organisation');
@@ -8,7 +8,6 @@ const Team = require('./team');
 const EmployeeTeam = require('./employeeTeam');
 const Log = require('./log');
 
-// Associations
 Organisation.hasMany(User, { foreignKey: 'organisation_id' });
 User.belongsTo(Organisation, { foreignKey: 'organisation_id' });
 

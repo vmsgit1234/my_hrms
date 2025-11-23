@@ -1,11 +1,10 @@
-﻿/* backend/src/routes/logs.js */
+﻿
 const express = require("express");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const { Log } = require("../models");
 
 const router = express.Router();
 
-// Only authenticated users can see logs (simple version)
 router.use(authMiddleware);
 
 router.get("/", async (req, res) => {

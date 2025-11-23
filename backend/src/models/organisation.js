@@ -1,4 +1,4 @@
-﻿/* backend/src/models/organisation.js */
+﻿
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 

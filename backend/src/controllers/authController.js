@@ -1,4 +1,4 @@
-﻿/* backend/src/controllers/authController.js */
+﻿
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Organisation, User, Log } = require('../models');
@@ -10,10 +10,9 @@ async function register(req, res) {
   }
 
   try {
-    // create organisation
     const org = await Organisation.create({ name: orgName });
 
-    // create user with hashed password
+    
     const password_hash = await bcrypt.hash(password, 10);
     const user = await User.create({
       organisation_id: org.id,
@@ -22,14 +21,13 @@ async function register(req, res) {
       name: adminName
     });
 
-    // generate token
     const token = jwt.sign(
       { userId: user.id, orgId: org.id },
       process.env.JWT_SECRET || 'devsecret',
       { expiresIn: '8h' }
     );
 
-    // log action
+    
     await Log.create({
       organisation_id: org.id,
       user_id: user.id,

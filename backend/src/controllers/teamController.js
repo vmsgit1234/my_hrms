@@ -1,7 +1,6 @@
-﻿// backend/src/controllers/teamController.js
+﻿
 const { Team, Employee, EmployeeTeam, Log } = require("../models");
 
-// List teams (including assigned employees)
 async function listTeams(req, res) {
   try {
     const teams = await Team.findAll({
@@ -15,7 +14,6 @@ async function listTeams(req, res) {
   }
 }
 
-// Create team
 async function createTeam(req, res) {
   try {
     const { name, description } = req.body;
@@ -28,7 +26,6 @@ async function createTeam(req, res) {
   }
 }
 
-// Update team
 async function updateTeam(req, res) {
   try {
     const id = Number(req.params.id);
@@ -45,7 +42,6 @@ async function updateTeam(req, res) {
   }
 }
 
-// Delete team
 async function deleteTeam(req, res) {
   try {
     const id = Number(req.params.id);
@@ -61,19 +57,16 @@ async function deleteTeam(req, res) {
   }
 }
 
-// Assign employee to team (POST /api/teams/:teamId/assign)
 async function assignEmployee(req, res) {
   try {
     const teamId = Number(req.params.teamId);
     const { employeeId } = req.body;
     if (!employeeId) return res.status(400).json({ message: "employeeId required" });
 
-    // Ensure both exist and belong to the org
     const team = await Team.findOne({ where: { id: teamId, organisation_id: req.user.orgId }});
     const employee = await Employee.findOne({ where: { id: employeeId, organisation_id: req.user.orgId }});
     if (!team || !employee) return res.status(404).json({ message: "Team or Employee not found" });
 
-    // Create association if not exists
     await EmployeeTeam.findOrCreate({ where: { team_id: teamId, employee_id: employeeId } });
 
     await Log.create({ organisation_id: req.user.orgId, user_id: req.user.userId, action: "assigned_employee_to_team", meta: { teamId, employeeId }});
@@ -84,7 +77,6 @@ async function assignEmployee(req, res) {
   }
 }
 
-// Unassign employee from team (DELETE /api/teams/:teamId/unassign)
 async function unassignEmployee(req, res) {
   try {
     const teamId = Number(req.params.teamId);
